@@ -6,7 +6,7 @@ import time
 from types import EllipsisType
 from typing import TYPE_CHECKING, Any, AsyncIterator, ClassVar, Generic, Optional, Self, TypeVar
 
-from ..procedure import BaseClassProcess, ProcessProtocol
+from ..procedure import BaseClassProcess, ProcessProtocol, BaseProcessPoint
 from ..eta import DatetimeTerm, DurationTerm
 from ..error import Diagnostic
 from ..reader import PossiblyLocatedValue

@@ -8,7 +8,7 @@ dynamic = ["version"]
 requires-python = ">3.11"
 
 dependencies=[
-  "slack_sdk~=3.21.3"
+  "slack_sdk"
 ]
 
 [project.entry-points."automancer.plugins"]

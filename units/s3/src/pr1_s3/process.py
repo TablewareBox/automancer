@@ -11,7 +11,7 @@ from botocore.config import Config
 
 import pr1 as am
 from pr1.fiber.expr import export_value
-from pr1.fiber.process import (BaseProcess, BaseProcessPoint, ProcessExecEvent,
+from pr1.fiber.process import (BaseProcess, ProcessExecEvent,
                                ProcessFailureEvent, ProcessPauseEvent, ProcessTerminationEvent)
 from pr1.master.analysis import MasterAnalysis, MasterError
 from pr1.util.asyncio import AsyncIteratorThread
@@ -59,7 +59,7 @@ class ProcessLocation:
     }
 
 @dataclass(kw_only=True)
-class ProcessPoint(BaseProcessPoint):
+class ProcessPoint(am.BaseProcessPoint):
   pass
 
 @am.provide_logger(logger)

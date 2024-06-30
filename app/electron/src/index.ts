@@ -473,7 +473,7 @@ export class CoreApplication {
           await runCommand([pythonInstallation.path, '-m', 'venv', envPath], { architecture, timeout: 60e3 });
 
           this.logger.debug('Installing pip-tools');
-          await runCommand([pythonPath, '-m', 'pip', 'install', 'pip-tools~=6.13.0'], { architecture, timeout: (5 * 60e3) });
+          await runCommand([pythonPath, '-m', 'pip', 'install', 'pip-tools'], { architecture, timeout: (5 * 60e3) });
 
           this.logger.debug('Installing dependencies');
           await runCommand([pythonPath, '-m', 'piptools', 'compile'], { architecture, cwd: hostDirPath, timeout: 60e3 });

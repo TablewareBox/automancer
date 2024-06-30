@@ -18,6 +18,6 @@ setup(
   },
 
   install_requires=[
-    "regex==2022.8.17"
+    "regex"
   ]
 )
