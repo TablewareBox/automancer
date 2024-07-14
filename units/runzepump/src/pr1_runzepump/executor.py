@@ -3,6 +3,7 @@ from typing import Any, Optional, Protocol
 import automancer as am
 
 from .device import RunzeSyringePumpDevice
+from . import logger, namespace
 
 
 class DeviceConf(Protocol):
@@ -13,7 +14,7 @@ class DeviceConf(Protocol):
     volume: float
 
 class Conf(Protocol):
-    devices: list[DeviceConf]``
+    devices: list[DeviceConf]
 
 class Executor(am.BaseExecutor):
     options_type = am.RecordType({
@@ -22,7 +23,7 @@ class Executor(am.BaseExecutor):
             'id': am.IdentifierType(),
             'label': am.Attribute(am.StrType(), default=None),
             'address': am.Attribute(am.StrType(), default=None),
-            'volume': am.AnyType
+            'volume': am.Attribute(am.IntType(mode='positive'), default=25000)
         })), default=list())
     })
 

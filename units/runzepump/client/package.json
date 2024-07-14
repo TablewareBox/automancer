@@ -1,8 +1,8 @@
 {
   "scripts": {
     "build": "npm run build:css && npm run build:js && (npm test || true)",
-    "build:css": "sass styles:../src/pr1_amf/client --no-source-map",
-    "build:js": "esbuild src/index.ts --bundle --external:*.css --external:pr1 --external:react --format=esm --minify --outdir=../src/pr1_amf/client",
+    "build:css": "sass styles:../src/pr1_runzepump/client --no-source-map",
+    "build:js": "esbuild src/index.ts --bundle --external:*.css --external:pr1 --external:react --format=esm --minify --outdir=../src/pr1_runzepump/client",
     "test": "tsc"
   },
   "devDependencies": {
