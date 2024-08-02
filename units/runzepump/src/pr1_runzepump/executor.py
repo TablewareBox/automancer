@@ -2,7 +2,7 @@ from typing import Any, Optional, Protocol
 
 import automancer as am
 
-from .device import RunzeSyringePumpDevice
+from .device import RunzeSyringePumpDevice, valve_info, speed_grade
 from . import logger, namespace
 
 
@@ -30,6 +30,9 @@ class Executor(am.BaseExecutor):
     def __init__(self, conf: Any, *, host):
         self._devices = dict[str, RunzeSyringePumpDevice]()
         self._host = host
+        self._valve_info = valve_info
+        self._valve_info_inv = {value: key for key, value in valve_info.items()}
+        self._speed_grade = speed_grade
 
         executor_conf: Conf = conf.dislocate()
 
@@ -55,3 +58,20 @@ class Executor(am.BaseExecutor):
             ])
 
             yield
+
+    async def device_run_protocol(self, device_id: str, speed: float, 
+                                  valve_position: str, plunger_position: float):
+        if device_id in self._devices:
+            device = self._devices[device_id]._device
+        else:
+            device = list(self._devices.values())[0]._device
+        logger.info(f"RunzePump: Running protocol on device {device}: {device.port}, {device.address}, {device.volume}, {device.mode}")
+        
+        # if speed_grade is not None:
+        #     await device.set_speed_max(speed)
+        await device.set_speed_grade("15")
+        
+        if valve_position is not None:
+            await device.set_valve_position(self._valve_info_inv[valve_position])
+        
+        await device.move_plunger_to(plunger_position)

@@ -24,3 +24,4 @@ client_path = files(__name__ + '.client')
 logger = parent_logger.getChild(namespace)
 
 from .executor import Executor
+from .parser import Parser

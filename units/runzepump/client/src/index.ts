@@ -1,6 +1,7 @@
 /// <reference path="types.d.ts" />
 
-import type { CreateFeaturesOptions, Features } from 'pr1';
+import { Form, PanelDataList, PanelRoot, PanelSection, Plugin, createProcessBlockImpl, CreateFeaturesOptions, Features } from 'pr1';
+import { PluginName, ProtocolBlockName } from 'pr1-shared';
 
 import mainStyles from './index.css' assert { type: 'css' };
 
@@ -25,40 +26,72 @@ export interface ProcessLocationData {
 
 }
 
+export interface ProcessData {
+  device: string
+  flowrate: number
+  valve_position: string
+  plunger_position: number
+}
+
 export interface SegmentData {
   valves: Record<DeviceId, string | null>;
 }
 
-export function createFeatures(options: CreateFeaturesOptions): Features {
-  let executor = options.host.state.executors[namespace] as ExecutorState;
-  let segmentData = options.segment.data[namespace] as SegmentData;
-  let previousSegmentData = options.protocol.segments[options.segmentIndex - 1]?.data[namespace] as SegmentData | undefined;
+// export function createFeatures(options: CreateFeaturesOptions): Features {
+//   let executor = options.host.state.executors[namespace] as ExecutorState;
+//   let segmentData = options.segment.data[namespace] as SegmentData;
+//   let previousSegmentData = options.protocol.segments[options.segmentIndex - 1]?.data[namespace] as SegmentData | undefined;
 
-  let features = [];
+//   let features = [];
 
-  if (options.segment.processNamespace === namespace) {
-    features.push({
-      icon: '360',
-      label: 'Rotate valves'
-    });
-  }
+//   if (options.segment.processNamespace === namespace) {
+//     features.push({
+//       icon: '360',
+//       label: 'Rotate valves'
+//     });
+//   }
 
-  features.push(...Object.values(executor.devices)
-    .filter((device) => {
-      let valve = segmentData.valves[device.id];
-      let previousValve = (previousSegmentData?.valves[device.id] ?? null);
-      return valve !== previousValve;
-    })
-    .map((device) => ({
-      icon: '360',
-      label: `Valve ${segmentData.valves[device.id]} (${device.label})`
-    }))
-  );
+//   features.push(...Object.values(executor.devices)
+//     .filter((device) => {
+//       let valve = segmentData.valves[device.id];
+//       let previousValve = (previousSegmentData?.valves[device.id] ?? null);
+//       return valve !== previousValve;
+//     })
+//     .map((device) => ({
+//       icon: '360',
+//       label: `Valve ${segmentData.valves[device.id]} (${device.label})`
+//     }))
+//   );
 
-  return features;
-}
+//   return features;
+// }
 
+
+// export default {
+//   createFeatures,
+
+//   blocks: {
+//     ['_' as ProtocolBlockName]: createProcessBlockImpl<ProcessData, never>({
+//       createFeatures
+//     })
+//   },
+// }
 
 export default {
-  createFeatures
+  name: 'runzepump',
+  blocks: {
+    ['_' as ProtocolBlockName]: createProcessBlockImpl({
+      Component(props) {
+        return (
+          "Pump"
+        );
+      },
+      createFeatures(data, location) {
+        return [{
+          icon: '360',
+          label: 'Pump'
+        }];
+      }
+    })
+  }
 }
