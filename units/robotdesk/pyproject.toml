@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=66", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pr1-robotdesk"
+dynamic = ["version"]
+requires-python = ">3.11"
+
+dependencies=[
+  "grbl_cnc",
+  "gripper_rm"
+]
+
+[project.entry-points."pr1.units"]
+robotdesk = "pr1_robotdesk"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"pr1_robotdesk.client" = ["*"]
+
+[tool.setuptools_scm]
+root = "../.."
